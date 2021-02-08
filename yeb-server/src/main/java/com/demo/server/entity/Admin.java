@@ -70,13 +70,11 @@ public class Admin implements Serializable, UserDetails {
     @TableField(exist = false)
     private List<Role> roles;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return roles.stream()
-//                .map(role -> new SimpleGrantedAuthority(role.getName()))
-//                .collect(Collectors.toList());
-        return null;
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
     }
 
     @Override

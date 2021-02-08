@@ -2,6 +2,7 @@ package com.demo.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.demo.server.entity.Role;
 import com.demo.server.util.JwtTokenUtil;
 import com.demo.server.entity.Admin;
 import com.demo.server.mapper.AdminMapper;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -70,5 +72,13 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     public Admin getAdminByUserName(String name) {
         return adminMapper.selectOne(new QueryWrapper<Admin>().eq("username",name)
                                                               .eq("enabled",true));
+    }
+
+    @Override
+    public List<Role> getRolesById(int id) {
+        // 获取用户id
+        Admin admin = (Admin) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Role> rolesById = adminMapper.getRolesById(admin.getId());
+        return rolesById;
     }
 }

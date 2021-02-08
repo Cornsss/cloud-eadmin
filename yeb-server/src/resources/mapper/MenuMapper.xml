@@ -32,13 +32,13 @@
     </resultMap>
 
 
-    <!--<resultMap id="MenusWithRole" type="com.demo.server.entity.Menu" extends="BaseResultMap">
+    <resultMap id="MenusWithRole" type="com.demo.server.entity.Menu" extends="BaseResultMap">
         <collection property="roles" ofType="com.demo.server.entity.Role">
             <id column="rid" property="id" />
             <result column="rname" property="name" />
             <result column="rnameZh" property="nameZh" />
         </collection>
-    </resultMap>-->
+    </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
@@ -73,7 +73,7 @@
   </select>
 
 
-    <!--&lt;!&ndash;查询菜单及角色&ndash;&gt;
+    <!--查询菜单及角色-->
     <select id="getAllMenusWithRole" resultMap="MenusWithRole">
       SELECT
         m.*,
@@ -89,6 +89,6 @@
         AND mr.rid = r.id
       ORDER BY
         m.id
-    </select>-->
+    </select>
 
 </mapper>

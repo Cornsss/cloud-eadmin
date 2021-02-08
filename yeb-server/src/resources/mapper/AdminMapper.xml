@@ -21,4 +21,15 @@
         id, name, phone, telephone, address, enabled, username, password, user_face, remark
     </sql>
 
+    <select id="getRolesById" resultType="com.demo.server.entity.Role">
+        SELECT
+            t1.*
+        FROM
+            t_role t1
+            LEFT JOIN t_admin_role t2 ON t2.rid = t1.id
+            LEFT JOIN t_admin t3 ON t3.id = t2.admin_id
+        WHERE
+            t3.id = #{id}
+    </select>
+
 </mapper>

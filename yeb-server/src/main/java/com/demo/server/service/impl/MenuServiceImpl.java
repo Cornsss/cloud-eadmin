@@ -45,4 +45,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         }
         return allMenusByAdminId;
     }
+
+    @Override
+    public List<Menu> getAllMenusWithRole() {
+        List<Menu> allMenusWithRole = menuMapper.getAllMenusWithRole();
+        return allMenusWithRole;
+    }
 }

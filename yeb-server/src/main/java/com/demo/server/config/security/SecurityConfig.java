@@ -69,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //放行登录及登出
 //                 .antMatchers("/login/**", "/logout/**").permitAll()
                 .anyRequest().authenticated()
+                // 动态权限配置
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(O object) {
@@ -95,10 +96,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService() {
         return username -> {
             Admin admin = adminService.getAdminByUserName(username);
-            if (null == admin) {
-
+            if (null != admin) {
+                admin.setRoles(adminService.getRolesById(admin.getId()));
+            }else{
+                try {
+                    throw new Exception("用户名或密码不正确");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-//            admin.setRoles(roleService.getAllRolesByAdminId(admin.getId()));
             return admin;
         };
     }
