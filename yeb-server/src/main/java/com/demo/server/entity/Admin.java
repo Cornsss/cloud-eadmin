@@ -75,6 +75,7 @@ public class Admin implements Serializable, UserDetails {
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
+//        return null;
     }
 
     @Override

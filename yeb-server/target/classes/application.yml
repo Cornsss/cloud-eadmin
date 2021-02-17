@@ -43,10 +43,10 @@ spring:
 mybatis-plus:
   mapper-locations: classpath*:/mapper/*.xml
   # 配置MyBatis数据返回类型别名（默认别名是类名）
-  type-aliases-package: com.personal.server.entity
+#  type-aliases-package: com.personal.server.entity
   configuration:
     # 自动驼峰命名
-    map-underscore-to-camel-case: false
+    map-underscore-to-camel-case: true
 #日志输出的配置
 logging:
   level:

@@ -42,6 +42,7 @@ public class CustomFilter implements FilterInvocationSecurityMetadataSource {
         }
         //如果请求的url和菜单不匹配，默认给一个角色，即登录就可以访问
         return SecurityConfig.createList("ROLE_LOGIN");
+//        return null;
     }
 
     @Override

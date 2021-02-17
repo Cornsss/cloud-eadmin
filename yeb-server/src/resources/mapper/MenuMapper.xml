@@ -40,6 +40,20 @@
         </collection>
     </resultMap>
 
+    <resultMap id="MenusWithChildren" type="com.demo.server.entity.Menu" extends="BaseResultMap">
+        <id column="id1" property="id" />
+        <result column="name1" property="name" />
+        <result column="rname" property="name" />
+        <collection property="children" ofType="com.demo.server.entity.Menu">
+            <id column="id2" property="id" />
+            <result column="name2" property="name" />
+            <collection property="children" ofType="com.demo.server.entity.Menu">
+                <id column="id3" property="id" />
+                <result column="name3" property="name" />
+            </collection>
+        </collection>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, url, path, component, name, iconCls, keepAlive, requireAuth, parentId, enabled
@@ -79,7 +93,7 @@
         m.*,
         r.id AS rid,
         r.`name` AS rname,
-        r.nameZh AS rnameZh
+        r.name_zh AS rnameZh
       FROM
         t_menu m,
         t_menu_role mr,
@@ -89,6 +103,24 @@
         AND mr.rid = r.id
       ORDER BY
         m.id
+    </select>
+
+    <select id="getAllMenus" resultMap="MenusWithChildren">
+        SELECT
+            t1.id AS id1,
+            t1.`name` AS name1,
+            t2.id AS id2,
+            t2.`name` AS name2,
+            t3.id AS id3,
+            t3.`name` AS name3
+        FROM
+            t_menu t1,
+            t_menu t2,
+            t_menu t3
+        WHERE
+            t1.id = t2.parent_id
+            AND t2.id = t3.parent_id
+            AND t3.enabled = '1'
     </select>
 
 </mapper>

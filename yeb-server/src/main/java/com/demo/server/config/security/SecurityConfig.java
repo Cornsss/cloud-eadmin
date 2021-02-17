@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
@@ -98,12 +99,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             Admin admin = adminService.getAdminByUserName(username);
             if (null != admin) {
                 admin.setRoles(adminService.getRolesById(admin.getId()));
-            }else{
-                try {
-                    throw new Exception("用户名或密码不正确");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            }else {
+                throw new UsernameNotFoundException("用户名或密码不存在！");
             }
             return admin;
         };

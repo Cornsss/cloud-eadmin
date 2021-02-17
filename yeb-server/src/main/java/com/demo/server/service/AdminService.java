@@ -22,5 +22,5 @@ public interface AdminService extends IService<Admin> {
 
     Admin getAdminByUserName(String name);
 
-    List<Role> getRolesById(int id);
+    List<Role> getRolesById(Integer id);
 }

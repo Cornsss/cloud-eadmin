@@ -3,6 +3,7 @@ package com.demo.server.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.demo.server.entity.Admin;
 import com.demo.server.entity.Role;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,5 +24,5 @@ public interface AdminMapper extends BaseMapper<Admin> {
      * @param id
      * @return
      */
-    public List<Role> getRolesById(int id);
+     List<Role> getRolesById(@Param("id") Integer id);
 }

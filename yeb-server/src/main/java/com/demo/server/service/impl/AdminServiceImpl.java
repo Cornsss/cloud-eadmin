@@ -73,12 +73,11 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         return adminMapper.selectOne(new QueryWrapper<Admin>().eq("username",name)
                                                               .eq("enabled",true));
     }
-
-    @Override
-    public List<Role> getRolesById(int id) {
+    
+//    @Override
+    public List<Role> getRolesById(Integer id) {
         // 获取用户id
-        Admin admin = (Admin) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Role> rolesById = adminMapper.getRolesById(admin.getId());
+        List<Role> rolesById = adminMapper.getRolesById(id);
         return rolesById;
     }
 }
