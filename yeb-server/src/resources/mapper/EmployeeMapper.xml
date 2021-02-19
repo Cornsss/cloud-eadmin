@@ -35,9 +35,117 @@
         <result column="salary_id" property="salaryId" />
     </resultMap>
 
+    <resultMap id="EmployeeListByPage" type="com.demo.server.entity.Employee" extends="BaseResultMap">
+        <association property="nation" javaType="com.demo.server.entity.Nation">
+            <id column="nid" property="id"></id>
+            <result column="nname" property="name"></result>
+        </association>
+        <association property="department" javaType="com.demo.server.entity.Department">
+            <id column="did" property="id"></id>
+            <result column="dname" property="name"></result>
+        </association>
+        <association property="joblevel" javaType="com.demo.server.entity.Joblevel">
+            <id column="jid" property="id"></id>
+            <result column="jname" property="name"></result>
+        </association>
+        <association property="position" javaType="com.demo.server.entity.Position">
+            <id column="pid" property="id"></id>
+            <result column="pname" property="name"></result>
+        </association>
+        <association property="politicsStatus" javaType="com.demo.server.entity.PoliticsStatus">
+            <id column="psid" property="id"></id>
+            <result column="psname" property="name"></result>
+        </association>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, name, gender, birthday, id_card, wedlock, nation_id, native_place, politic_id, email, phone, address, department_id, job_level_id, pos_id, engage_form, tiptop_degree, specialty, school, begin_date, work_state, work_id, contract_term, conversion_time, not_work_date, begin_contract, end_contract, work_age, salary_id
     </sql>
+
+    <!--分页查询员工信息-->
+    <select id="getEmployeeListByPage" resultMap="EmployeeListByPage">
+        SELECT
+            e.*,
+            n.id AS nid,
+            n.`name` AS nname,
+            ps.id AS psid,
+            ps.`name` AS psname,
+            d.id AS did,
+            d.`name` AS dname,
+            j.id AS jid,
+            j.`name` AS jname,
+            p.id AS pid,
+            p.`name` AS pname
+        FROM
+            t_employee e
+            left join t_nation n on n.id = e.nation_id
+            left join t_politics_status ps on ps.id = e.politic_id
+            left join t_department d on d.id = e.department_id
+            left join t_joblevel j on j.id = e.job_level_id
+            left join t_position p on p.id = e.pos_id
+        WHERE
+            1=1
+            <if test="null!=employee.name and ''!=employee.name">
+                AND e.`name` LIKE CONCAT('%',#{employee.name},'%')
+            </if>
+            <if test="null!=employee.nationId and ''!=employee.nationId">
+                AND e.nation_id = #{employee.nationId}
+            </if>
+            <if test="null!=employee.politicId and ''!=employee.politicId">
+                AND e.politic_id = #{employee.politicId}
+            </if>
+            <if test="null!=employee.departmentId and ''!=employee.departmentId">
+                AND e.department_id = #{employee.departmentId}
+            </if>
+            <if test="null!=employee.posId and ''!=employee.posId">
+                AND e.pos_id = #{employee.posId}
+            </if>
+            <if test="null!=employee.jobLevelId and ''!=employee.jobLevelId">
+                AND e.job_level_id = #{employee.jobLevelId}
+            </if>
+            <if test="null!=employee.engageForm and ''!=employee.engageForm">
+                AND e.engage_form = #{employee.engageForm}
+            </if>
+            <if test="null!=dateScope and dateScope.length==2">
+                AND e.begin_date BETWEEN #{dateScope[0]} AND #{dateScope[1]}
+            </if>
+        ORDER BY
+            e.id
+    </select>
+
+    <!-- //最大工号  完成添加时的自增-->
+    <select id="maxWorkID" resultType="java.lang.Integer">
+        select max(work_id) from t_employee
+    </select>
+
+    <select id="getAllEmployeeList" resultMap="EmployeeListByPage">
+        SELECT
+        e.*,
+        n.id AS nid,
+        n.`name` AS nname,
+        ps.id AS psid,
+        ps.`name` AS psname,
+        d.id AS did,
+        d.`name` AS dname,
+        j.id AS jid,
+        j.`name` AS jname,
+        p.id AS pid,
+        p.`name` AS pname
+        FROM
+        t_employee e
+        left join t_nation n on n.id = e.nation_id
+        left join t_politics_status ps on ps.id = e.politic_id
+        left join t_department d on d.id = e.department_id
+        left join t_joblevel j on j.id = e.job_level_id
+        left join t_position p on p.id = e.pos_id
+        WHERE
+        1=1
+        <if test="null!=id and ''!=id">
+            AND e.id=#{id}
+        </if>
+        ORDER BY
+            e.id
+    </select>
 
 </mapper>

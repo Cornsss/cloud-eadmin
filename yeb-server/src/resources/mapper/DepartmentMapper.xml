@@ -17,4 +17,29 @@
         id, name, parent_id, dep_path, enabled, is_parent
     </sql>
 
+    <resultMap id="DepartmentsWithChildren" type="com.demo.server.entity.Department" extends="BaseResultMap">
+        <collection property="children" ofType="com.demo.server.entity.Department"
+                    select="com.demo.server.mapper.DepartmentMapper.getAllDepartments"
+                    column="id">
+
+        </collection>
+    </resultMap>
+
+    <!--获取所有部门信息-->
+    <select id="getAllDepartments" resultMap="DepartmentsWithChildren">
+        select
+        <include refid="Base_Column_List"></include>
+        from t_department
+        where parent_id = #{pid}
+    </select>
+
+    <!--添加部门信息-->
+    <select id="addDep" statementType="CALLABLE">
+        call addDep(#{name,mode=IN,jdbcType=VARCHAR},#{parentId,mode=IN,jdbcType=INTEGER},#{enabled,mode=IN,jdbcType=VARCHAR},#{result,mode=OUT,jdbcType=INTEGER},#{id,mode=OUT,jdbcType=INTEGER})
+    </select>
+
+    <!--删除部门信息-->
+    <select id="deleteDep" statementType="CALLABLE">
+        call deleteDep(#{id,mode=IN,jdbcType=INTEGER},#{result,mode=OUT,jdbcType=INTEGER})
+    </select>
 </mapper>

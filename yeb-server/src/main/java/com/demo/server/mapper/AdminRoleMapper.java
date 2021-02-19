@@ -15,4 +15,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface AdminRoleMapper extends BaseMapper<AdminRole> {
 
+    Integer addAdminRole(Integer adminid, Integer[] rids);
 }

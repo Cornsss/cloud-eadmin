@@ -24,5 +24,13 @@ public interface AdminMapper extends BaseMapper<Admin> {
      * @param id
      * @return
      */
-     List<Role> getRolesById(@Param("id") Integer id);
+    List<Role> getRolesById(@Param("id") Integer id);
+
+    /**
+     * 获取所有操作员信息
+     * @param id
+     * @param keywords
+     * @return
+     */
+    List<Admin> getAllAdmin(@Param("id") Integer id, @Param("keywords") String keywords);
 }

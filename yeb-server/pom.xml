@@ -47,7 +47,7 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.6.1</version>
+            <version>2.7.0</version>
         </dependency>
         <!-- Swagger第三方ui依赖 -->
         <dependency>
@@ -88,5 +88,23 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.70</version>
         </dependency>
+
+        <!--EasyPOI工具-->
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-base</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-web</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-annotation</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
     </dependencies>
 </project>

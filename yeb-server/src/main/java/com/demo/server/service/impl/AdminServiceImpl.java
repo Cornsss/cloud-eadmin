@@ -8,6 +8,7 @@ import com.demo.server.entity.Admin;
 import com.demo.server.mapper.AdminMapper;
 import com.demo.server.result.Result;
 import com.demo.server.service.AdminService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -79,5 +80,12 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         // 获取用户id
         List<Role> rolesById = adminMapper.getRolesById(id);
         return rolesById;
+    }
+
+    @Override
+    public List<Admin> getAllAdmin(String keywords) {
+        Admin principal = (Admin) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return adminMapper.getAllAdmin(principal.getId(),keywords);
     }
 }

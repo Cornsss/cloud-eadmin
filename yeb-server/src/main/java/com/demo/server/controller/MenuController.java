@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * @since 2021-02-03
  */
 @RestController
-@RequestMapping("/system/cfg")
+@RequestMapping("/system/basic")
 public class MenuController {
 
     @Autowired
@@ -42,6 +42,5 @@ public class MenuController {
     public List<Menu> getAllMenus(){
         return menuService.getAllMenus();
     }
-
 
 }

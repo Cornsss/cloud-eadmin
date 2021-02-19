@@ -2,6 +2,7 @@ package com.demo.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.demo.server.entity.AdminRole;
+import com.demo.server.result.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,4 +16,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface AdminRoleService extends IService<AdminRole> {
 
+    Result updateAdminRole(Integer adminid, Integer[] rids);
 }

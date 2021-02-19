@@ -22,11 +22,20 @@
         <result column="name_zh" property="nameZh" />
     </resultMap>
 
+    <resultMap id="AdminWithRoles" type="com.demo.server.entity.Admin" extends="BaseResultMap">
+        <collection property="roles" ofType="com.demo.server.entity.Role">
+            <id column="rid" property="id" />
+            <result column="rname" property="name" />
+            <result column="rnameZh" property="nameZh" />
+        </collection>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, name, phone, telephone, address, enabled, username, password, user_face, remark
     </sql>
 
+    <!--根据用户id查询角色列表-->
     <select id="getRolesById" parameterType="java.lang.Integer"  resultMap="BaseResultMap2">
         SELECT
           r.*
@@ -37,4 +46,23 @@
           ar.admin_id = #{id}
     </select>
 
+    <!--查询操作员信息-->
+    <select id="getAllAdmin" resultMap="AdminWithRoles">
+        SELECT
+            a.*,
+            r.id as rid,
+            r.`name` as rname,
+            r.name_zh as rnameZh
+        FROM
+            t_admin a
+            left join t_admin_role ar on ar.admin_id = a.id
+            left join t_role r on r.id = ar.rid
+        WHERE
+            a.id != #{id}
+            <if test="null!=keywords and ''!=keywords">
+                AND a.`name` like concat('%',#{keywords},'%')
+            </if>
+        ORDER BY
+            a.id
+    </select>
 </mapper>

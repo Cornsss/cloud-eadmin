@@ -35,7 +35,7 @@ public class RoleController {
 
     @ApiOperation(value = "获取所有角色列表")
     @GetMapping("/")
-    public List<Role> getAllPositions(){
+    public List<Role> getRoles(){
         return roleService.list();
     }
 
