@@ -9,5 +9,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class YebMailApplication {
     public static void main(String[] args) {
         SpringApplication.run(YebMailApplication.class);
+        System.out.println("test");
     }
 }
